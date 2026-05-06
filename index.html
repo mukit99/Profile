@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Portfolio - Creative Thinker | Future Entrepreneur</title>
+    <meta name="description" content="Personal portfolio showcasing creative work and skills">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: #0a0a0f;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Gradients */
+        .gradient-text {
+            background: linear-gradient(135deg, #a78bfa, #60a5fa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e1b4b, #312e81, #1e1b4b);
+        }
+        
+        /* Glow effects */
+        .glow {
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
+        }
+        
+        .glow-hover:hover {
+            box-shadow: 0 0 60px rgba(139, 92, 246, 0.5);
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .animate-slide-up {
+            animation: slide-up 0.8s ease-out forwards;
+        }
+        
+        /* Particle background */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(139, 92, 246, 0.6);
+            border-radius: 50%;
+            animation: float 10s infinite;
+        }
+        
+        /* Progress bars */
+        .progress-bar {
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 1.5s ease-out;
+        }
+        
+        /* Timeline */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: #8b5cf6;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
+        }
+        
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Navigation */
+        .nav-hidden {
+            transform: translateY(-100%);
+        }
+        
+        .nav-visible {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Particle Background -->
+    <div id="particles"></div>
+
+    <!-- Floating Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-transform duration-500 nav-hidden">
+        <div class="glass mx-4 mt-4 rounded-full px-6 py-3 max-w-6xl mx-auto">
+            <div class="flex justify-between items-center">
+                <a href="#hero" class="text-xl font-bold gradient-text">Portfolio</a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="text-sm text-gray-300 hover:text-white transition-colors">About</a>
+                    <a href="#skills" class="text-sm text-gray-300 hover:text-white transition-colors">Skills</a>
+                    <a href="#portfolio" class="text-sm text-gray-300 hover:text-white transition-colors">Work</a>
+                    <a href="#gallery" class="text-sm text-gray-300 hover:text-white transition-colors">Gallery</a>
+                    <a href="#goals" class="text-sm text-gray-300 hover:text-white transition-colors">Goals</a>
+                    <a href="#contact" class="text-sm text-gray-300 hover:text-white transition-colors">Contact</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-white">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-black/95 hidden flex-col items-center justify-center space-y-8">
+        <a href="#about" class="text-2xl text-white hover:text-purple-400 transition-colors mobile-link">About</a>
+        <a href="#skills" class="text-2xl text-white hover:text-purple-400 transition-colors mobile-link">Skills</a>
+        <a href="#portfolio" class="text-2xl text-white hover:text-purple-400 transition-colors mobile-link">Work</a>
+        <a href="#gallery" class="text-2xl text-white hover:text-purple-400 transition-colors mobile-link">Gallery</a>
+        <a href="#goals" class="text-2xl text-white hover:text-purple-400 transition-colors mobile-link">Goals</a>
+        <a href="#contact" class="text-2xl text-white hover:text-purple-400 transition-colors mobile-link">Contact</a>
+        <button id="close-menu" class="absolute top-6 right-6 text-white">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center px-4">
+        <div class="absolute inset-0 gradient-bg opacity-50"></div>
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%239C92AC\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        
+        <div class="relative z-10 text-center max-w-4xl mx-auto">
+            <div class="mb-8 animate-float">
+                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden glass-card glow mb-6">
+                <img src="profile.jpg" class="w-full h-full object-cover">
+                </div>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">
+                Hi, I'm <span class="gradient-text">Mukit</span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-gray-300 mb-4 animate-slide-up" style="animation-delay: 0.2s">
+                Creative Thinker | Web Developer
+            </p>
+            
+            <p class="text-gray-400 max-w-2xl mx-auto mb-10 animate-slide-up" style="animation-delay: 0.4s">
+                Passionate about creating innovative solutions and bringing creative ideas to life. 
+                Let's build something amazing together.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style="animation-delay: 0.6s">
+                <a href="#portfolio" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full font-semibold glow-hover transition-all hover:scale-105 flex items-center justify-center gap-2">
+                    <i data-lucide="briefcase" class="w-5 h-5"></i>
+                    View My Work
+                </a>
+                <a href="#contact" class="px-8 py-4 glass rounded-full font-semibold hover:bg-white/10 transition-all hover:scale-105 flex items-center justify-center gap-2">
+                    <i data-lucide="mail" class="w-5 h-5"></i>
+                    Contact Me
+                </a>
+                <button onclick="downloadCV()" class="px-8 py-4 glass rounded-full font-semibold hover:bg-white/10 transition-all hover:scale-105 flex items-center justify-center gap-2">
+                    <i data-lucide="download" class="w-5 h-5"></i>
+                    Download CV
+                </button>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i data-lucide="chevron-down" class="w-8 h-8 text-gray-400"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 px-4 relative">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 reveal">
+                About <span class="gradient-text">Me</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="reveal">
+                    <div class="glass-card rounded-3xl p-8 glow-hover transition-all">
+                        <h3 class="text-2xl font-semibold mb-4">Who I Am</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6">
+                            I'm a passionate creative professional with a drive for innovation and excellence. 
+                            With a background in design and technology, I bring a unique perspective to every project.
+                            I believe in the power of creativity to solve problems and create meaningful experiences.
+                        </p>
+                        <p class="text-gray-300 leading-relaxed">
+                            When I'm not working, you'll find me exploring new technologies, reading about entrepreneurship, 
+                            or enjoying outdoor adventures. I'm always eager to learn and grow.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="reveal">
+                    <h3 class="text-2xl font-semibold mb-8">My Journey</h3>
+                    <div class="relative border-l-2 border-purple-500/30 ml-4 space-y-8">
+                        <div class="timeline-item pl-8 relative">
+                            <h4 class="font-semibold text-lg">Started My Journey</h4>
+                            <p class="text-purple-400 text-sm">2022</p>
+                            <p class="text-gray-400 mt-2">Began exploring the world of design and development</p>
+                        </div>
+                        <div class="timeline-item pl-8 relative">
+                            <h4 class="font-semibold text-lg">First Major Project</h4>
+                            <p class="text-purple-400 text-sm">2024</p>
+                            <p class="text-gray-400 mt-2">Launched my first successful college project</p>
+                        </div>
+                        <div class="timeline-item pl-8 relative">
+                            <h4 class="font-semibold text-lg">Expanded Skills</h4>
+                            <p class="text-purple-400 text-sm">2025</p>
+                            <p class="text-gray-400 mt-2">Learned new technologies and frameworks</p>
+                        </div>
+                        <div class="timeline-item pl-8 relative">
+                            <h4 class="font-semibold text-lg">Entrepreneurship Path</h4>
+                            <p class="text-purple-400 text-sm">2025 - Present</p>
+                            <p class="text-gray-400 mt-2">Building my own creative sites</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Hobbies -->
+            <div class="mt-20">
+                <h3 class="text-2xl font-semibold text-center mb-12 reveal">Hobbies & Interests</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="glass-card rounded-2xl p-6 text-center glow-hover transition-all hover:scale-105 reveal">
+                        <i data-lucide="camera" class="w-10 h-10 mx-auto mb-4 text-purple-400"></i>
+                        <h4 class="font-medium">Photography</h4>
+                    </div>
+                    <div class="glass-card rounded-2xl p-6 text-center glow-hover transition-all hover:scale-105 reveal">
+                        <i data-lucide="book-open" class="w-10 h-10 mx-auto mb-4 text-blue-400"></i>
+                        <h4 class="font-medium">Reading</h4>
+                    </div>
+                    <div class="glass-card rounded-2xl p-6 text-center glow-hover transition-all hover:scale-105 reveal">
+                        <i data-lucide="plane" class="w-10 h-10 mx-auto mb-4 text-pink-400"></i>
+                        <h4 class="font-medium">Travel</h4>
+                    </div>
+                    <div class="glass-card rounded-2xl p-6 text-center glow-hover transition-all hover:scale-105 reveal">
+                        <i data-lucide="music" class="w-10 h-10 mx-auto mb-4 text-green-400"></i>
+                        <h4 class="font-medium">Music</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 px-4 relative">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 reveal">
+                My <span class="gradient-text">Skills</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Technical Skills -->
+                <div class="reveal">
+                    <h3 class="text-2xl font-semibold mb-8 flex items-center gap-3">
+                        <i data-lucide="code" class="w-6 h-6 text-purple-400"></i>
+                        Technical Skills
+                    </h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">HTML/CSS</span>
+                                <span class="text-purple-400">95%</span>
+                            </div>
+                            <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                                <div class="progress-bar" style="width: 0%" data-width="95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">JavaScript</span>
+                                <span class="text-purple-400">85%</span>
+                            </div>
+                            <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                                <div class="progress-bar" style="width: 0%" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">React/Vue</span>
+                                <span class="text-purple-400">80%</span>
+                            </div>
+                            <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                                <div class="progress-bar" style="width: 0%" data-width="80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">UI/UX Design</span>
+                                <span class="text-purple-400">90%</span>
+                            </div>
+                            <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                                <div class="progress-bar" style="width: 0%" data-width="90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Creative Skills -->
+                <div class="reveal">
+                    <h3 class="text-2xl font-semibold mb-8 flex items-center gap-3">
+                        <i data-lucide="palette" class="w-6 h-6 text-pink-400"></i>
+                        Creative Skills
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass-card rounded-2xl p-6 text-center">
+                            <div class="relative w-24 h-24 mx-auto mb-4">
+                                <svg class="w-full h-full transform -rotate-90">
+                                    <circle cx="48" cy="48" r="40" stroke="#374151" stroke-width="8" fill="none"></circle>
+                                    <circle cx="48" cy="48" r="40" stroke="#ec4899" stroke-width="8" fill="none" 
+                                            stroke-dasharray="251.2" stroke-dashoffset="37.68" stroke-linecap="round"></circle>
+                                </svg>
+                                <span class="absolute inset-0 flex items-center justify-center font-bold">85%</span>
+                            </div>
+                            <h4 class="font-medium">Web Design</h4>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 text-center">
+                            <div class="relative w-24 h-24 mx-auto mb-4">
+                                <svg class="w-full h-full transform -rotate-90">
+                                    <circle cx="48" cy="48" r="40" stroke="#374151" stroke-width="8" fill="none"></circle>
+                                    <circle cx="48" cy="48" r="40" stroke="#8b5cf6" stroke-width="8" fill="none" 
+                                            stroke-dasharray="251.2" stroke-dashoffset="25.12" stroke-linecap="round"></circle>
+                                </svg>
+                                <span class="absolute inset-0 flex items-center justify-center font-bold">90%</span>
+                            </div>
+                            <h4 class="font-medium">Web Development</h4>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 text-center">
+                            <div class="relative w-24 h-24 mx-auto mb-4">
+                                <svg class="w-full h-full transform -rotate-90">
+                                    <circle cx="48" cy="48" r="40" stroke="#374151" stroke-width="8" fill="none"></circle>
+                                    <circle cx="48" cy="48" r="40" stroke="#3b82f6" stroke-width="8" fill="none" 
+                                            stroke-dasharray="251.2" stroke-dashoffset="50.24" stroke-linecap="round"></circle>
+                                </svg>
+                                <span class="absolute inset-0 flex items-center justify-center font-bold">80%</span>
+                            </div>
+                            <h4 class="font-medium">Video Editing</h4>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 text-center">
+                            <div class="relative w-24 h-24 mx-auto mb-4">
+                                <svg class="w-full h-full transform -rotate-90">
+                                    <circle cx="48" cy="48" r="40" stroke="#374151" stroke-width="8" fill="none"></circle>
+                                    <circle cx="48" cy="48" r="40" stroke="#10b981" stroke-width="8" fill="none" 
+                                            stroke-dasharray="251.2" stroke-dashoffset="62.8" stroke-linecap="round"></circle>
+                                </svg>
+                                <span class="absolute inset-0 flex items-center justify-center font-bold">75%</span>
+                            </div>
+                            <h4 class="font-medium">VFX</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-24 px-4 relative">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 reveal">
+                My <span class="gradient-text">Work</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="glass-card rounded-2xl overflow-hidden glow-hover transition-all hover:scale-105 reveal cursor-pointer" onclick="openModal('project1')">
+                    <div class="h-48 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
+                        <i data-lucide="layout" class="w-16 h-16 text-white/50"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">E-Commerce Platform</h3>
+                        <p class="text-gray-400 text-sm mb-4">A modern shopping experience with seamless checkout</p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-purple-500/20 rounded-full text-xs text-purple-300">React</span>
+                            <span class="px-3 py-1 bg-blue-500/20 rounded-full text-xs text-blue-300">Node.js</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="glass-card rounded-2xl overflow-hidden glow-hover transition-all hover:scale-105 reveal cursor-pointer" onclick="openModal('project2')">
+                    <div class="h-48 bg-gradient-to-br from-pink-600 to-purple-600 flex items-center justify-center">
+                        <i data-lucide="smartphone" class="w-16 h-16 text-white/50"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Mobile Banking App</h3>
+                        <p class="text-gray-400 text-sm mb-4">Secure and intuitive mobile banking solution</p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-pink-500/20 rounded-full text-xs text-pink-300">Flutter</span>
+                            <span class="px-3 py-1 bg-purple-500/20 rounded-full text-xs text-purple-300">Firebase</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="glass-card rounded-2xl overflow-hidden glow-hover transition-all hover:scale-105 reveal cursor-pointer" onclick="openModal('project3')">
+                    <div class="h-48 bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center">
+                        <i data-lucide="bar-chart-3" class="w-16 h-16 text-white/50"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Analytics Dashboard</h3>
+                        <p class="text-gray-400 text-sm mb-4">Real-time data visualization platform</p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-blue-500/20 rounded-full text-xs text-blue-300">Vue.js</span>
+                            <span class="px-3 py-1 bg-cyan-500/20 rounded-full text-xs text-cyan-300">D3.js</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="glass-card rounded-2xl overflow-hidden glow-hover transition-all hover:scale-105 reveal cursor-pointer" onclick="openModal('project4')">
+                    <div class="h-48 bg-gradient-to-br from-green-600 to-teal-600 flex items-center justify-center">
+                        <i data-lucide="leaf" class="w-16 h-16 text-white/50"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Eco-Friendly Brand</h3>
+                        <p class="text-gray-400 text-sm mb-4">Complete brand identity for sustainable products</p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-green-500/20 rounded-full text-xs text-green-300">Branding</span>
+                            <span class="px-3 py-1 bg-teal-500/20 rounded-full text-xs text-teal-300">Illustrator</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="glass-card rounded-2xl overflow-hidden glow-hover transition-all hover:scale-105 reveal cursor-pointer" onclick="openModal('project5')">
+                    <div class="h-48 bg-gradient-to-br from-orange-600 to-red-600 flex items-center justify-center">
+                        <i data-lucide="video" class="w-16 h-16 text-white/50"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Video Streaming Service</h3>
+                        <p class="text-gray-400 text-sm mb-4">OTT platform with personalized recommendations</p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-orange-500/20 rounded-full text-xs text-orange-300">Next.js</span>
+                            <span class="px-3 py-1 bg-red-500/20 rounded-full text-xs text-red-300">AWS</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="glass-card rounded-2xl overflow-hidden glow-hover transition-all hover:scale-105 reveal cursor-pointer" onclick="openModal('project6')">
+                    <div class="h-48 bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center">
+                        <i data-lucide="cpu" class="w-16 h-16 text-white/50"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">AI Assistant</h3>
+                        <p class="text-gray-400 text-sm mb-4">Conversational AI for customer support</p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-indigo-500/20 rounded-full text-xs text-indigo-300">Python</span>
+                            <span class="px-3 py-1 bg-purple-500/20 rounded-full text-xs text-purple-300">TensorFlow</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Modals -->
+    <div id="modal-project1" class="modal">
+        <div class="glass-card rounded-2xl max-w-2xl w-full p-8 relative">
+            <button onclick="closeModal('project1')" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h3 class="text-2xl font-bold mb-4">E-Commerce Platform</h3>
+            <p class="text-gray-300 mb-6">A comprehensive e-commerce solution featuring a modern React frontend, secure payment processing, and real-time inventory management. The platform supports multiple vendors and includes an advanced recommendation engine.</p>
+            <div class="flex gap-4">
+                <a href="#" class="px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition-colors">View Live</a>
+                <a href="#" class="px-6 py-3 glass rounded-full hover:bg-white/10 transition-colors">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-project2" class="modal">
+        <div class="glass-card rounded-2xl max-w-2xl w-full p-8 relative">
+            <button onclick="closeModal('project2')" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h3 class="text-2xl font-bold mb-4">Mobile Banking App</h3>
+            <p class="text-gray-300 mb-6">A secure and user-friendly mobile banking application built with Flutter. Features include biometric authentication, transaction history, bill payments, and budget tracking with beautiful data visualizations.</p>
+            <div class="flex gap-4">
+                <a href="#" class="px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition-colors">View Live</a>
+                <a href="#" class="px-6 py-3 glass rounded-full hover:bg-white/10 transition-colors">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-project3" class="modal">
+        <div class="glass-card rounded-2xl max-w-2xl w-full p-8 relative">
+            <button onclick="closeModal('project3')" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h3 class="text-2xl font-bold mb-4">Analytics Dashboard</h3>
+            <p class="text-gray-300 mb-6">A powerful analytics dashboard for tracking business metrics in real-time. Built with Vue.js and D3.js, it features customizable widgets, automated reports, and predictive analytics powered by machine learning.</p>
+            <div class="flex gap-4">
+                <a href="#" class="px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition-colors">View Live</a>
+                <a href="#" class="px-6 py-3 glass rounded-full hover:bg-white/10 transition-colors">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-project4" class="modal">
+        <div class="glass-card rounded-2xl max-w-2xl w-full p-8 relative">
+            <button onclick="closeModal('project4')" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h3 class="text-2xl font-bold mb-4">Eco-Friendly Brand</h3>
+            <p class="text-gray-300 mb-6">Complete brand identity design for an eco-friendly product line. The project included logo design, packaging, marketing materials, and brand guidelines that reflect the company's commitment to sustainability.</p>
+            <div class="flex gap-4">
+                <a href="#" class="px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition-colors">View Case Study</a>
+                <a href="#" class="px-6 py-3 glass rounded-full hover:bg-white/10 transition-colors">Behance</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-project5" class="modal">
+        <div class="glass-card rounded-2xl max-w-2xl w-full p-8 relative">
+            <button onclick="closeModal('project5')" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h3 class="text-2xl font-bold mb-4">Video Streaming Service</h3>
+            <p class="text-gray-300 mb-6">A feature-rich OTT platform with personalized content recommendations, adaptive streaming, and social features. Built with Next.js and deployed on AWS for scalability and performance.</p>
+            <div class="flex gap-4">
+                <a href="#" class="px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition-colors">View Live</a>
+                <a href="#" class="px-6 py-3 glass rounded-full hover:bg-white/10 transition-colors">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-project6" class="modal">
+        <div class="glass-card rounded-2xl max-w-2xl w-full p-8 relative">
+            <button onclick="closeModal('project6')" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h3 class="text-2xl font-bold mb-4">AI Assistant</h3>
+            <p class="text-gray-300 mb-6">An intelligent conversational AI for customer support that understands context and provides accurate responses. Built with Python and TensorFlow, it integrates with existing CRM systems and learns from interactions.</p>
+            <div class="flex gap-4">
+                <a href="#" class="px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition-colors">View Demo</a>
+                <a href="#" class="px-6 py-3 glass rounded-full hover:bg-white/10 transition-colors">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-24 px-4 relative">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 reveal">
+                Photo <span class="gradient-text">Gallery</span>
+            </h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="aspect-square glass-card rounded-xl overflow-hidden cursor-pointer glow-hover transition-all hover:scale-105 reveal" onclick="openLightbox(0)">
+                    <img src="1.png" class="w-full h-full object-cover">
+                    
+                </div>
+                <div class="aspect-square glass-card rounded-xl overflow-hidden cursor-pointer glow-hover transition-all hover:scale-105 reveal" onclick="openLightbox(1)">
+                    <img src="2.png" class="w-full h-full object-cover">
+                    
+                </div>
+                <div class="aspect-square glass-card rounded-xl overflow-hidden cursor-pointer glow-hover transition-all hover:scale-105 reveal" onclick="openLightbox(2)">
+                    <img src="3.png" class="w-full h-full object-cover">
+                    
+                </div>
+                <div class="aspect-square glass-card rounded-xl overflow-hidden cursor-pointer glow-hover transition-all hover:scale-105 reveal" onclick="openLightbox(3)">
+                    <img src="4.png" class="w-full h-full object-cover">
+                    
+                </div>
+                <div class="aspect-square glass-card rounded-xl overflow-hidden cursor-pointer glow-hover transition-all hover:scale-105 reveal" onclick="openLightbox(4)">
+                    <img src="5.png" class="w-full h-full object-cover">
+                    
+                </div>
+                <div class="aspect-square glass-card rounded-xl overflow-hidden cursor-pointer glow-hover transition-all hover:scale-105 reveal" onclick="openLightbox(5)">
+                    <img src="6.png" class="w-full h-full object-cover">
+                    
+                </div>
+                <div class="aspect-square glass-card rounded-xl overflow-hidden cursor-pointer glow-hover transition-all hover:scale-105 reveal" onclick="openLightbox(6)">
+                    <img src="7.png" class="w-full h-full object-cover">
+                    
+                </div>
+                <div class="aspect-square glass-card rounded-xl overflow-hidden cursor-pointer glow-hover transition-all hover:scale-105 reveal" onclick="openLightbox(7)">
+                    <img src="8.png" class="w-full h-full object-cover">
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white hover:text-gray-300">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <button class="absolute left-6 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300" onclick="event.stopPropagation(); prevImage()">
+            <i data-lucide="chevron-left" class="w-12 h-12"></i>
+        </button>
+        <button class="absolute right-6 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300" onclick="event.stopPropagation(); nextImage()">
+            <i data-lucide="chevron-right" class="w-12 h-12"></i>
+        </button>
+        <div class="max-w-4xl max-h-[80vh] w-full mx-4">
+            <div id="lightbox-content" class="glass-card rounded-2xl p-4 w-full h-[60vh] flex items-center justify-center">
+                <i data-lucide="image" class="w-32 h-32 text-white/30"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Career Goals Section -->
+    <section id="goals" class="py-24 px-4 relative">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 reveal">
+                Career <span class="gradient-text">Goals</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card rounded-2xl p-8 text-center glow-hover transition-all hover:scale-105 reveal">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
+                        <i data-lucide="rocket" class="w-10 h-10 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Launch Startup</h3>
+                    <p class="text-gray-400">Build and launch my own tech startup focused on solving real-world problems through innovative solutions.</p>
+                </div>
+                
+                <div class="glass-card rounded-2xl p-8 text-center glow-hover transition-all hover:scale-105 reveal">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-pink-600 to-purple-600 flex items-center justify-center">
+                        <i data-lucide="globe" class="w-10 h-10 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Global Impact</h3>
+                    <p class="text-gray-400">Create products and services that positively impact millions of users worldwide.</p>
+                </div>
+                
+                <div class="glass-card rounded-2xl p-8 text-center glow-hover transition-all hover:scale-105 reveal">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center">
+                        <i data-lucide="users" class="w-10 h-10 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Mentor Others</h3>
+                    <p class="text-gray-400">Give back to the community by mentoring aspiring developers and entrepreneurs.</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 glass-card rounded-2xl p-8 reveal">
+                <h3 class="text-2xl font-bold mb-6 text-center">My Vision Board</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="aspect-video rounded-xl bg-gradient-to-br from-purple-600/30 to-blue-600/30 flex items-center justify-center">
+                        <span class="text-sm font-medium">Innovation</span>
+                    </div>
+                    <div class="aspect-video rounded-xl bg-gradient-to-br from-pink-600/30 to-purple-600/30 flex items-center justify-center">
+                        <span class="text-sm font-medium">Leadership</span>
+                    </div>
+                    <div class="aspect-video rounded-xl bg-gradient-to-br from-green-600/30 to-teal-600/30 flex items-center justify-center">
+                        <span class="text-sm font-medium">Sustainability</span>
+                    </div>
+                    <div class="aspect-video rounded-xl bg-gradient-to-br from-orange-600/30 to-red-600/30 flex items-center justify-center">
+                        <span class="text-sm font-medium">Creativity</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-4 relative">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 reveal">
+                Get In <span class="gradient-text">Touch</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="reveal">
+                    <h3 class="text-2xl font-semibold mb-6">Let's Connect</h3>
+                    <p class="text-gray-400 mb-8">Have a project in mind or just want to chat? Feel free to reach out. I'm always open to discussing new opportunities and ideas.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full glass flex items-center justify-center">
+                                <i data-lucide="mail" class="w-5 h-5 text-purple-400"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400">Email</p>
+                                <p class="font-medium">mukitkhanshorif@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full glass flex items-center justify-center">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-purple-400"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400">Location</p>
+                                <p class="font-medium">Sylhet, Bangladesh</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <p class="text-sm text-gray-400 mb-4">Follow Me</p>
+                        <div class="flex gap-4">
+                            <!-- Facebook -->
+<a href="https://www.facebook.com/share/1BG8aUigbP/" target="_blank"
+   class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-blue-600/30 transition-colors glow-hover">
+    <i class="fab fa-facebook-f"></i>
+</a>
+
+<!-- YouTube -->
+<a href="https://www.youtube.com/@mukitkhanshorif9780" target="_blank"
+   class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-red-600/30 transition-colors glow-hover">
+    <i class="fab fa-youtube"></i>
+</a>
+
+<!-- Instagram -->
+<a href="https://www.instagram.com/shorif__31" target="_blank"
+   class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-pink-600/30 transition-colors glow-hover">
+    <i class="fab fa-instagram"></i>
+</a>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/8801792441295" target="_blank"
+   class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-green-600/30 transition-colors glow-hover">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- GitHub -->
+<a href="https://github.com/mukit99" target="_blank"
+   class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-gray-600/30 transition-colors glow-hover">
+    <i class="fab fa-github"></i>
+</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reveal">
+                    <form class="glass-card rounded-2xl p-8" onsubmit="handleSubmit(event)">
+                        <div class="mb-6">
+                            <label class="block text-sm text-gray-400 mb-2">Your Name</label>
+                            <input type="text" class="w-full px-4 py-3 bg-black/30 rounded-xl border border-white/10 focus:border-purple-500 focus:outline-none transition-colors" placeholder="John Doe" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm text-gray-400 mb-2">Your Email</label>
+                            <input type="email" class="w-full px-4 py-3 bg-black/30 rounded-xl border border-white/10 focus:border-purple-500 focus:outline-none transition-colors" placeholder="john@example.com" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm text-gray-400 mb-2">Message</label>
+                            <textarea rows="4" class="w-full px-4 py-3 bg-black/30 rounded-xl border border-white/10 focus:border-purple-500 focus:outline-none transition-colors resize-none" placeholder="Your message..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl font-semibold glow-hover transition-all hover:scale-[1.02] flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-4 border-t border-white/10">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="text-gray-400 text-sm">
+                ﾩ 2024 Your Name. All rights reserved. Built with passion and creativity.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        window.addEventListener('load', () => {
+    lucide.createIcons();
+});
+        // Create particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+        
+        // Navigation scroll behavior
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.classList.remove('nav-hidden');
+                navbar.classList.add('nav-visible');
+            } else {
+                navbar.classList.add('nav-hidden');
+                navbar.classList.remove('nav-visible');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenuBtn = document.getElementById('close-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
+        });
+        
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex');
+        });
+        
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+            });
+        });
+        
+        // Scroll reveal animation
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    
+                    // Animate progress bars
+                    const progressBars = entry.target.querySelectorAll('.progress-bar');
+                    progressBars.forEach(bar => {
+                        const width = bar.getAttribute('data-width');
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 200);
+                    });
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        revealElements.forEach(el => revealObserver.observe(el));
+        
+        // Modal functions
+        function openModal(projectId) {
+            const modal = document.getElementById('modal-' + projectId);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(projectId) {
+            const modal = document.getElementById('modal-' + projectId);
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Close modal on outside click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+        
+        // Lightbox functions
+        let currentImageIndex = 0;
+        const totalImages = 8;
+        
+        function openLightbox(index) {
+            currentImageIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            updateLightboxContent();
+        }
+        
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % totalImages;
+            updateLightboxContent();
+        }
+        
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+            updateLightboxContent();
+        }
+        
+        function updateLightboxContent() {
+            const content = document.getElementById('lightbox-content');
+            // In a real implementation, this would show actual images
+            content.innerHTML = `<div class="text-center"><i data-lucide="image" class="w-32 h-32 text-white/30 mx-auto mb-4"></i><p class="text-gray-400">Image ${currentImageIndex + 1}</p></div>`;
+            lucide.createIcons();
+        }
+        
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowRight') nextImage();
+                if (e.key === 'ArrowLeft') prevImage();
+            }
+        });
+        
+        // Form submission
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert('Thank you for your message! I will get back to you soon.');
+            e.target.reset();
+        }
+        
+        // Download CV function
+        function downloadCV() {
+            alert('CV download functionality - Replace with actual CV file URL');
+        }
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
